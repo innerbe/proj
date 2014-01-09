@@ -209,9 +209,7 @@ set_light_battery(struct light_device_t* dev,
         struct light_state_t const* state)
 {
     pthread_mutex_lock(&g_lock);
-#ifdef FW_VENDOR_OEM_LED
-    // nothing
-#else
+#ifndef FW_VENDOR_OEM_LED
     handle_speaker_battery_locked(dev);
 #endif
     pthread_mutex_unlock(&g_lock);
@@ -223,9 +221,7 @@ set_light_notifications(struct light_device_t* dev,
         struct light_state_t const* state)
 {
     pthread_mutex_lock(&g_lock);
-#ifdef FW_VENDOR_OEM_LED
-    // nothing
-#else
+#ifndef FW_VENDOR_OEM_LED
     g_notification = *state;
     handle_speaker_battery_locked(dev);
 #endif
@@ -238,9 +234,7 @@ set_light_attention(struct light_device_t* dev,
         struct light_state_t const* state)
 {
     pthread_mutex_lock(&g_lock);
-#ifdef FW_VENDOR_OEM_LED
-    // nothing
-#else
+#ifndef FW_VENDOR_OEM_LED
     if (state->flashMode == LIGHT_FLASH_HARDWARE) {
         g_attention = state->flashOnMS;
     } else if (state->flashMode == LIGHT_FLASH_NONE) {
